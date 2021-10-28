@@ -9,7 +9,8 @@ const useTheme = () => {
   return {
     toggle,
     setLight,
-    setDark
+    setDark,
+    theme
   }
 };
 

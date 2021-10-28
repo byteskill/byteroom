@@ -5,16 +5,15 @@ import Button from '@mui/material/Button'
 import { IconButton } from '@mui/material'
 import MoonIcon from '@mui/icons-material/DarkMode'
 import SunIcon from '@mui/icons-material/LightMode'
-import theme from '../src/theme'
-import { useBetween } from 'use-between'
+import useSharedTheme from '../hooks/useTheme'
 
 interface NavProps { }
 
 const Nav: React.FC<NavProps> = (props) => {
+  const { theme, toggle } = useSharedTheme();
 
-  const switchThemes = () => {
-    console.log(theme);
-  };
+  const switchThemes = () => toggle();
+
   return (
     <AppBar position="relative" color="primary" style={{ display: 'flex' }}>
       <Toolbar>
@@ -23,7 +22,7 @@ const Nav: React.FC<NavProps> = (props) => {
         </Typography>
         <div style={{ flexGrow: 1 }} />
         <IconButton onClick={switchThemes}>
-          {theme.palette.mode === 'dark' ? <SunIcon /> : <MoonIcon />}
+          {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
         </IconButton>
         <Button color="info" variant="contained">
           Login
