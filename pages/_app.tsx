@@ -7,6 +7,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import createEmotionCache from '../src/createEmotionCache';
 import Nav from '../components/Nav';
 import useSharedTheme from '../hooks/useTheme';
+import { darkScrollbar } from '@mui/material';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -21,6 +22,13 @@ export default function MyApp(props: MyAppProps) {
   const { theme: paletteMode, } = useSharedTheme();
 
   const theme = createTheme({
+    components:{
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: paletteMode === 'dark' ? darkScrollbar() : null
+        }
+      }
+    },
     palette: {
       mode: paletteMode
     }
