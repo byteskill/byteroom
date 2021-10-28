@@ -5,21 +5,21 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { useTheme } from '@mui/material/styles';
 
 const subjects = [
-  { name: 'Math Class',        next_class: 'Mon 9:00 am',  students_num:  20 },
-  { name: 'Spanish Class',     next_class: 'Tue 9:00 am',  students_num:  20 },
-  { name: 'Italian Class',     next_class: 'Mon 12:00 am', students_num: 20 },
-  { name: 'English Class',     next_class: 'Tue 11:00 am', students_num: 20 },
-  { name: 'P.E. Class',        next_class: 'Wed 9:00 am',  students_num:  20 },
-  { name: 'French Class',      next_class: 'Tue 12:00 am', students_num: 20 },
-  { name: 'German Class',      next_class: 'Mon 10:00 am', students_num: 20 },
-  { name: 'Geography Class',   next_class: 'Mon 11:00 am', students_num: 20 },
-  { name: 'Informatics Class', next_class: 'Wed 11:00 am', students_num: 20 },
-  { name: 'Programming Class', next_class: 'Wed 12:00 am', students_num: 20 },
-  { name: 'History Class',     next_class: 'Mon 13:00 am', students_num: 20 },
-  { name: 'Physics Class',     next_class: 'Thu 9:00 am',  students_num:  20 },
-  { name: 'Chemistry Class',   next_class: 'Thu 12:00 am', students_num: 20 },
-  { name: 'Art Class',         next_class: 'Thu 13:00 am', students_num: 20 },
-  { name: 'Science Class',     next_class: 'Wed 13:00 am', students_num: 20 },
+  { name: 'Math Class',        next_class: new Date('November 1, 2021 09:00'), students_num:  20 },
+  { name: 'Spanish Class',     next_class: new Date('November 2, 2021 09:00'), students_num:  20 },
+  { name: 'Italian Class',     next_class: new Date('November 1, 2021 12:00'), students_num: 20 },
+  { name: 'English Class',     next_class: new Date('November 2, 2021 11:00'), students_num: 20 },
+  { name: 'P.E. Class',        next_class: new Date('November 3, 2021 09:00'), students_num:  20 },
+  { name: 'French Class',      next_class: new Date('November 2, 2021 12:00'), students_num: 20 },
+  { name: 'German Class',      next_class: new Date('November 1, 2021 10:00'), students_num: 20 },
+  { name: 'Geography Class',   next_class: new Date('November 1, 2021 11:00'), students_num: 20 },
+  { name: 'Informatics Class', next_class: new Date('November 3, 2021 11:00'), students_num: 20 },
+  { name: 'Programming Class', next_class: new Date('November 3, 2021 12:00'), students_num: 20 },
+  { name: 'History Class',     next_class: new Date('November 1, 2021 13:00'), students_num: 20 },
+  { name: 'Physics Class',     next_class: new Date('November 4, 2021 09:00'), students_num:  20 },
+  { name: 'Chemistry Class',   next_class: new Date('November 4, 2021 12:00'), students_num: 20 },
+  { name: 'Art Class',         next_class: new Date('November 4, 2021 13:00'), students_num: 20 },
+  { name: 'Science Class',     next_class: new Date('November 3, 2021 13:00'), students_num: 20 },
 ]
 
 const Home: NextPage = () => {
@@ -47,7 +47,12 @@ const Home: NextPage = () => {
                   return(
                     <TableRow key={i}>
                       <TableCell component="th" scope="row">{subject.name}</TableCell>
-                      <TableCell align="right">{subject.next_class}</TableCell>
+                      <TableCell align="right">{
+                        [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ][subject.next_class.getDay() - 1] +
+                        ' ' + subject.next_class.getDate() + ' ' +
+                        [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ][subject.next_class.getMonth()] +
+                        ' ' + subject.next_class.getFullYear() + ', ' + subject.next_class.toLocaleTimeString() 
+                      }</TableCell>
                       <TableCell align="right">{subject.students_num}</TableCell>
                     </TableRow>
                   );
