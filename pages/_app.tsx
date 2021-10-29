@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useCallback } from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -19,13 +19,15 @@ interface MyAppProps extends AppProps {
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-  const { theme: paletteMode, } = useSharedTheme();
+  const themeVal = props.pageProps.theme === 'dark' && 'dark' || 'light'
+
+  const { theme: paletteMode, setDark, setLight } = useSharedTheme(themeVal);
 
   const theme = createTheme({
     components:{
       MuiCssBaseline: {
         styleOverrides: {
-          body: paletteMode === 'dark' ? darkScrollbar() : null
+          body: paletteMode === 'dark' ? darkScrollbar() : ""
         }
       }
     },
@@ -33,6 +35,11 @@ export default function MyApp(props: MyAppProps) {
       mode: paletteMode
     }
   });
+
+  useCallback(() => {
+    if(process.browser)
+      paletteMode === 'dark' ? setDark() : setLight()
+  }, [paletteMode, setDark, setLight])();
 
   return (
     <CacheProvider value={emotionCache}>

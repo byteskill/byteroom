@@ -1,30 +1,22 @@
-import { useCallback, useState, useEffect } from "react";
-import { useBetween } from "use-between";
+import { useCallback } from 'react';
+import createPersistedState from 'use-persisted-state';
+const useCounterState = createPersistedState('count');
 
-const useTheme = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+type ThemeValues = 'dark' | 'light';
 
-  /* TODO: Fix this code as it sets the mode of the page but not of the Nav
-  useEffect(() =>
-  {
-    const savedMode = localStorage.getItem('colorMode');
-    if(savedMode === 'light')
-      setTheme(savedMode === 'light' ? 'light' : 'dark');
-  }, []);*/
+const useSharedTheme = (initialTheme: ThemeValues) => {
+  const [theme, setTheme] = useCounterState<ThemeValues>(initialTheme);
 
-  useEffect(() => localStorage.setItem('colorMode', theme));
+  const toggle = useCallback(() => setTheme(theme === 'dark' ? 'light' : 'dark'), [setTheme, theme]);
+  const setLight = useCallback(() => setTheme('light'), [setTheme]);
+  const setDark = useCallback(() => setTheme('dark'), [setTheme]);
 
-  const toggle = useCallback(() => setTheme(theme === 'dark' ? 'light' : 'dark'), [theme]);
-  const setLight = useCallback(() => setTheme('light'), []);
-  const setDark = useCallback(() => setTheme('dark'), []);
   return {
     toggle,
     setLight,
     setDark,
     theme
-  }
+  };
 };
-
-const useSharedTheme = () => useBetween(useTheme);
 
 export default useSharedTheme;

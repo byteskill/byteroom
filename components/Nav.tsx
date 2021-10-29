@@ -7,15 +7,20 @@ import { useTheme } from '@mui/material/styles'
 import MoonIcon from '@mui/icons-material/DarkMode'
 import SunIcon from '@mui/icons-material/LightMode'
 import useSharedTheme from '../hooks/useTheme'
+import { useEffect } from 'react'
 
 interface NavProps { }
 
 const Nav: React.FC<NavProps> = (props) => {
-  const { theme: paletteMode, toggle } = useSharedTheme();
+  const { theme: paletteMode, toggle } = useSharedTheme('light');
 
   const theme = useTheme();
 
   const switchThemes = () => toggle();
+
+  useEffect(() => {
+    document.cookie = `colorScheme=${theme}; path=/`;
+  }, [theme]);
 
   return (
     <AppBar position="relative" color="primary" style={{ display: 'flex' }}>
